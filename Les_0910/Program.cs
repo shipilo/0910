@@ -95,6 +95,77 @@ namespace Les_0910
                 return $"{surname} {name} {dateOfBirth:d} {exam} {score}";
             }
         }
+        struct Worker
+        {
+            public string name;
+            public Post post;
+            public int cheek;
+            public bool stupidity;
+
+            public Worker(string name, Post post, int cheek, bool stupidity)
+            {
+                this.name = name;
+                this.post = post;
+                this.cheek = cheek;
+                this.stupidity = stupidity;
+            }
+            public override string ToString()
+            {
+                return $"[{name}, {post}, {cheek}, {stupidity}]";
+            }
+        }
+        struct Table
+        {
+            public int serial;
+            public Color color;
+            public List<Worker> places;
+            public Table(int serial, Color color)
+            {
+                this.serial = serial;
+                this.color = color;
+                this.places = new List<Worker>();
+            }
+            public override string ToString()
+            {
+                return $"{serial}-{color}: {String.Join(" ", places)}";
+            }
+        }
+        struct Grandma
+        {
+            public string name;
+            public int age;
+            public Disease[] diseases;
+            public Medicine[] medicines;
+            public Grandma(string name, int age, Disease[] deseases, Medicine[] medicines)
+            {
+                this.name = name;
+                this.age = age;
+                this.diseases = deseases;
+                this.medicines = medicines;
+            }
+            public override string ToString()
+            {
+                return $"[{name}, {age}, {String.Join(" ", diseases)}]";
+            }
+        }
+        struct Hospital
+        {
+            public string name;
+            public Disease[] diseases;
+            public int capacity;
+            public List<Grandma> places;
+            public Hospital(string name, Disease[] deseases, int capacity)
+            {
+                this.name = name;
+                this.diseases = deseases;
+                this.capacity = capacity;
+                this.places = new List<Grandma>();
+            }
+            public override string ToString()
+            {
+                return $"{name}, {String.Join(" ", diseases)}, {capacity}: {String.Join(" ", places)}";
+            }
+        }
         enum Exam
         {
             Physics,
@@ -118,41 +189,22 @@ namespace Les_0910
             Black,
             Brown,
             Pink
-        }
-        struct Worker
+        }       
+        enum Disease
         {
-            public string name;
-            public Post post;
-            public int cheek;
-            public bool stupidity;
-
-            public Worker(string name, Post post, int cheek, bool stupidity)
-            {
-                this.name = name;
-                this.post = post;
-                this.cheek = cheek;
-                this.stupidity = stupidity;
-            }
-            public override string ToString()
-            {
-                return $"[{name}, {post}, {cheek}, {stupidity}]";
-            }
+            ОРВИ,
+            Грипп,
+            Коронавирус,
+            Ангина,
+            Насморк
         }
-        class Table
+        enum Medicine
         {
-            public int serial;
-            public Color color;
-            public List<Worker> places = new List<Worker>();
-            public Table(int serial, Color color, List<Worker> places)
-            {
-                this.serial = serial;
-                this.color = color;
-                this.places = places;
-            }
-            public override string ToString()
-            {
-                return $"{serial}-{color}: {String.Join(" ", places)}";
-            }
+            Таблетки_ОРВИ,
+            Капельница_грипп,
+            Вакцина_корона,
+            Чай_ангина,
+            Чеснок_насморк
         }
         static void Main(string[] args)
         {
@@ -299,7 +351,7 @@ namespace Les_0910
                     Console.WriteLine("Ошибка ввода. Попробуйте ещё раз.");
                 }                
             }
-            */
+            
             Console.WriteLine("\nЗадание 4.");
             Console.WriteLine("Количество работников и столов: ");
             int n, t;
@@ -321,7 +373,7 @@ namespace Les_0910
             Stack<Table> tables = new Stack<Table>();
             for (int i = t; i > 0; i--)
             {
-                tables.Push(new Table(i, (Color)rnd.Next(0, 9), new List<Worker>()));
+                tables.Push(new Table(i, (Color)rnd.Next(0, 9));
             }
 
             // создаю связи знакомств
@@ -410,6 +462,87 @@ namespace Les_0910
                 }
             }
             Console.WriteLine($"Что же получается в итоге:\n{String.Join("\n", tables)}");
+            */
+
+            Console.WriteLine("\nЗадание 5.");
+            Console.WriteLine("Количество бабуль и больниц: ");
+            int n_gr, n_hos;
+            while (!int.TryParse(Console.ReadLine(), out n_gr) || !int.TryParse(Console.ReadLine(), out n_hos))
+            {
+                Console.WriteLine("Ошибка ввода. Попробуйте ещё раз.");
+            }
+            Queue<Grandma> grandmas = new Queue<Grandma>();
+            Stack<Hospital> hospitals = new Stack<Hospital>();
+            for (int i = 0; i < n_gr; i++)
+            {
+                int random = rnd.Next(0, 6);
+                Disease[] dis = new Disease[random];
+                Medicine[] med = new Medicine[random];
+                for(int j = 0; j < dis.Length - 1; j++)
+                {
+                    random = rnd.Next(0, 5);
+                    while (Array.IndexOf(dis, (Disease)random) != -1)
+                    {
+                        random = rnd.Next(0, 5);
+                    }
+                    dis[j] = (Disease)random;
+                    med[j] = (Medicine)random;
+                }
+                grandmas.Enqueue(new Grandma($"_{rnd.Next(0, 1000)}_", rnd.Next(70, 90), dis, med));
+            }
+            for (int i = 0; i < n_hos; i++)
+            {
+                int random = rnd.Next(1, 6);
+                Disease[] dis = new Disease[random];
+                for (int j = 0; j < dis.Length - 1; j++)
+                {
+                    random = rnd.Next(0, 5);
+                    while (Array.IndexOf(dis, (Disease)random) != -1)
+                    {
+                        random = rnd.Next(0, 5);
+                    }
+                    dis[j] = (Disease)random;
+                }
+                hospitals.Push(new Hospital($"/{rnd.Next(0, 1000)}/", dis, rnd.Next(1, n_gr + 1)));
+            }
+            Console.WriteLine("Остались на улице:");
+            while (grandmas.Count > 0)
+            {
+                bool done = false;
+                if (grandmas.Peek().diseases.Length == 0)
+                {
+                    for (int i = 0; i < hospitals.Count; i++)
+                    {
+                        if (hospitals.ElementAt(i).places.Count == 0)
+                        {
+                            hospitals.ElementAt(i).places.Add(grandmas.Dequeue());
+                            done = true;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < hospitals.Count; i++)
+                    {
+                        foreach (Disease disease in hospitals.ElementAt(i).diseases)
+                        {
+                            if (Array.IndexOf(grandmas.Peek().diseases, disease) != -1
+                                && hospitals.ElementAt(i).capacity > hospitals.ElementAt(i).places.Count)
+                            {
+                                hospitals.ElementAt(i).places.Add(grandmas.Dequeue());
+                                done = true;
+                                break;
+                            }
+                        }
+                        if (done) break;
+                    }
+                }
+                if (!done)
+                {
+                    Console.WriteLine(grandmas.Dequeue());
+                }
+            }
+            Console.WriteLine($"Распределение по больницам:\n{String.Join("\n\n", hospitals)}");
 
             Console.ReadLine();
         }
@@ -436,11 +569,6 @@ namespace Les_0910
             array[i2] = value1;
         }
         static void Swap(List<int> array, int i1, int i2, int value1, int value2)
-        {
-            array[i1] = value2;
-            array[i2] = value1;
-        }
-        static void Swap(Worker[] array, int i1, int i2, Worker value1, Worker value2)
         {
             array[i1] = value2;
             array[i2] = value1;

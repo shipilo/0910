@@ -74,7 +74,7 @@ namespace Met_0910
                     temperature[i, j] = rnd.Next(-30, 30);
                 }
             }
-            */
+            
 
             Console.WriteLine("Д/з 6.1");
             StreamReader sr = new StreamReader(args[0]);
@@ -83,7 +83,7 @@ namespace Met_0910
             int vow_count, cons_count;
             CountVowCons(text, out vow_count, out cons_count);
             Console.WriteLine($"Гласные: {vow_count}, согласные: {cons_count}");
-
+            */
             Console.WriteLine("\nД/з 6.2");
             int w1 = 0, w2 = 0, h = 0;
             LinkedList<LinkedList<double>> matrix1 = new LinkedList<LinkedList<double>>(), matrix2 = new LinkedList<LinkedList<double>>();
@@ -143,7 +143,6 @@ namespace Met_0910
                 }
             }
             Console.WriteLine($"Результат:\n{PrintMatrix(MultiplyMatrix(matrix1, matrix2))}");
-
 
 
             Console.WriteLine("\nД/з 6.3");
