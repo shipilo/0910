@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBD50E8A-2628-4385-B402-1F8FDA1883B8}</ProjectGuid>
+    <ProjectGuid>{EEE00966-271B-4F3E-A2B7-6A5CA5DBA09E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Les_0910</RootNamespace>
-    <AssemblyName>Les_0910</AssemblyName>
+    <RootNamespace>Home_0910</RootNamespace>
+    <AssemblyName>Home_0910</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

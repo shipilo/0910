@@ -4,8 +4,7 @@ using System.Collections.Generic;
 namespace Dop_0910
 {
     class Program
-    {
-        
+    {      
         static void Main(string[] args)
         {
             Random rnd = new Random();
