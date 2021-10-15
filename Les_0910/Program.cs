@@ -154,10 +154,10 @@ namespace Les_0910
             public Disease[] diseases;
             public int capacity;
             public List<Grandma> places;
-            public Hospital(string name, Disease[] deseases, int capacity)
+            public Hospital(string name, Disease[] diseases, int capacity)
             {
                 this.name = name;
-                this.diseases = deseases;
+                this.diseases = diseases;
                 this.capacity = capacity;
                 this.places = new List<Grandma>();
             }
