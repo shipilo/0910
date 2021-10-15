@@ -136,11 +136,11 @@ namespace Les_0910
             public int age;
             public Disease[] diseases;
             public Medicine[] medicines;
-            public Grandma(string name, int age, Disease[] deseases, Medicine[] medicines)
+            public Grandma(string name, int age, Disease[] diseases, Medicine[] medicines)
             {
                 this.name = name;
                 this.age = age;
-                this.diseases = deseases;
+                this.diseases = diseases;
                 this.medicines = medicines;
             }
             public override string ToString()
