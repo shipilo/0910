@@ -209,15 +209,15 @@ namespace Les_0910
         static void Main(string[] args)
         {
             Random rnd = new Random();
-            /*
+            
             Console.WriteLine("Задание 1.");
             Console.WriteLine(CompareTeams(new int[] { 1, 5, 6 }, new int[] { 5, 0, 6 }));
 
             Console.WriteLine("\nЗадание 2.");
             Console.WriteLine("Изначальный List:\n" + String.Join("\n", images));
-            for(int i = 0; i < images.Length; i++)
+            for(int i = 0; i < images.Count; i++)
             {
-                int odd = rnd.Next(images.Length);
+                int odd = rnd.Next(images.Count);
                 Swap(images, i, odd, images[i], images[odd]);
             }
             Console.WriteLine("\nПеремешанный:\n" + String.Join("\n", images));
@@ -370,7 +370,7 @@ namespace Les_0910
             Stack<Table> tables = new Stack<Table>();
             for (int i = t; i > 0; i--)
             {
-                tables.Push(new Table(i, (Color)rnd.Next(0, 9));
+                tables.Push(new Table(i, (Color)rnd.Next(0, 9)));
             }
 
             // создаю связи знакомств
@@ -441,10 +441,10 @@ namespace Les_0910
                         {
                             tables.ElementAt(j).places.Add(workers[i]); // то добавляю туда нового работника
                             done = true;
-                            break; // простите
+                            break;
                         }
                     }
-                    if (done) break; // простите ещё раз...(
+                    if (done) j = tables.Count;
                 }
                 if (!done) // если он всё же не сел
                 {
@@ -459,7 +459,7 @@ namespace Les_0910
                 }
             }
             Console.WriteLine($"Что же получается в итоге:\n{String.Join("\n", tables)}");
-            */
+            
 
             Console.WriteLine("\nЗадание 5.");
             Console.WriteLine("Количество бабуль и больниц: ");
@@ -514,6 +514,7 @@ namespace Les_0910
                         {
                             hospitals.ElementAt(i).places.Add(grandmas.Dequeue());
                             done = true;
+                            i = hospitals.Count;
                         }
                     }
                 }
@@ -531,7 +532,7 @@ namespace Les_0910
                                 break;
                             }
                         }
-                        if (done) break;
+                        if (done) i = hospitals.Count;
                     }
                 }
                 if (!done)
@@ -559,6 +560,11 @@ namespace Les_0910
             {
                 return "Ой, Бьорг - пончик! Ни для кого пива!";
             }
+        }        
+        static void Swap(string[] array, int i1, int i2, string value1, string value2)
+        {
+            array[i1] = value2;
+            array[i2] = value1;
         }
         static void Swap(List<string> array, int i1, int i2, string value1, string value2)
         {
@@ -655,7 +661,7 @@ namespace Les_0910
             sw.Write(output);
             sw.Close();
         }
-        static void SortStep(List<int> array, List<string> array2, int start, int end)
+        static void SortStep(List<int> array, string[] array2, int start, int end)
         {
             int pivot = (start + end) / 2, start0 = start, end0 = end;
             while (start < end)
