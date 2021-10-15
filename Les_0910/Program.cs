@@ -7,7 +7,7 @@ namespace Les_0910
 {
     class Program
     {
-        static string[] images =
+        static List<string> images = new List<string>()
            {
                 @"folder\1.png",
                 @"folder\1-копия.png",
@@ -217,11 +217,8 @@ namespace Les_0910
             Console.WriteLine("Изначальный List:\n" + String.Join("\n", images));
             for(int i = 0; i < images.Length; i++)
             {
-                if (rnd.Next(0, 8) != 0)
-                {
-                    int odd = rnd.Next(images.Length);
-                    Swap(images, i, odd, images[i], images[odd]);
-                }
+                int odd = rnd.Next(images.Length);
+                Swap(images, i, odd, images[i], images[odd]);
             }
             Console.WriteLine("\nПеремешанный:\n" + String.Join("\n", images));
 
@@ -563,7 +560,7 @@ namespace Les_0910
                 return "Ой, Бьорг - пончик! Ни для кого пива!";
             }
         }
-        static void Swap(string[] array, int i1, int i2, string value1, string value2)
+        static void Swap(List<string> array, int i1, int i2, string value1, string value2)
         {
             array[i1] = value2;
             array[i2] = value1;
@@ -658,7 +655,7 @@ namespace Les_0910
             sw.Write(output);
             sw.Close();
         }
-        static void SortStep(List<int> array, string[] array2, int start, int end)
+        static void SortStep(List<int> array, List<string> array2, int start, int end)
         {
             int pivot = (start + end) / 2, start0 = start, end0 = end;
             while (start < end)
