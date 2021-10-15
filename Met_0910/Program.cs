@@ -14,11 +14,10 @@ namespace Met_0910
         static void Main(string[] args)
         {
             Random rnd = new Random();
-            /*
+            
             Console.WriteLine("Упражнение 6.1");
             StreamReader sr = new StreamReader(args[0]);
             char[] text = sr.ReadToEnd().ToCharArray();
-            sr.Close();            
             int vow_count, cons_count;
             CountVowCons(text, out vow_count, out cons_count);
             Console.WriteLine($"Гласные: {vow_count}, согласные: {cons_count}");
@@ -65,7 +64,7 @@ namespace Met_0910
             }
             Console.WriteLine($"Результат:\n{PrintMatrix(MultiplyMatrix(matrix1, matrix2))}");
 
-            Console.WriteLine("\nД/з 6.3");
+            Console.WriteLine("\nУпражнение 6.3");
             int[,] temperature = new int[12, 30];
             for (int i = 0; i < temperature.GetLength(0); i++)
             {
@@ -74,20 +73,23 @@ namespace Met_0910
                     temperature[i, j] = rnd.Next(-30, 30);
                 }
             }
-            
+            double[] means = MeansOfMounths(temperature);
+            Array.Sort(means);
+            Console.WriteLine($"Отсортированные средние значения равны: {String.Join(" ", means)}");
 
-            Console.WriteLine("Д/з 6.1");
-            StreamReader sr = new StreamReader(args[0]);
-            List<char> text = sr.ReadToEnd().ToCharArray().ToList();
+            // Домашние задания
+            Console.WriteLine("\nД/з 6.1");
+            char[] text_ = sr.ReadToEnd().ToCharArray();
             sr.Close();
-            int vow_count, cons_count;
             CountVowCons(text, out vow_count, out cons_count);
             Console.WriteLine($"Гласные: {vow_count}, согласные: {cons_count}");
-            */
+            
             Console.WriteLine("\nД/з 6.2");
-            int w1 = 0, w2 = 0, h = 0;
-            LinkedList<LinkedList<double>> matrix1 = new LinkedList<LinkedList<double>>(), matrix2 = new LinkedList<LinkedList<double>>();
-            bool loop = true;
+            w1 = 0;
+            w2 = 0;
+            h = 0;
+            LinkedList<LinkedList<double>> matrix1_ = new LinkedList<LinkedList<double>>(), matrix2_ = new LinkedList<LinkedList<double>>();
+            loop = true;
             while (loop)
             {
                 Console.WriteLine("Размер 1 матрицы (_высота_ширина_): ");
@@ -113,7 +115,7 @@ namespace Met_0910
                     }
                     else
                     {
-                        matrix1.AddLast(new LinkedList<double>(row));
+                        matrix1_.AddLast(new LinkedList<double>(row));
                     }
                 }
                 catch (FormatException)
@@ -134,7 +136,7 @@ namespace Met_0910
                     }
                     else
                     {
-                        matrix2.AddLast(new LinkedList<double>(row));
+                        matrix2_.AddLast(new LinkedList<double>(row));
                     }
                 }
                 catch (FormatException)
@@ -142,11 +144,11 @@ namespace Met_0910
                     Console.WriteLine("Ошибка ввода.");
                 }
             }
-            Console.WriteLine($"Результат:\n{PrintMatrix(MultiplyMatrix(matrix1, matrix2))}");
+            Console.WriteLine($"Результат:\n{PrintMatrix(MultiplyMatrix(matrix1_, matrix2_))}");
 
 
             Console.WriteLine("\nД/з 6.3");
-            Dictionary<string, int[]> temperature = new Dictionary<string, int[]>();
+            Dictionary<string, int[]> temperature_ = new Dictionary<string, int[]>();
             for (int i = 1; i <= 12; i++)
             {
                 int[] degrees = new int[30];
@@ -157,48 +159,48 @@ namespace Met_0910
                 switch (i) // либо через массив mounths
                 {
                     case 1:
-                        temperature.Add("Январь", degrees);
+                        temperature_.Add("Январь", degrees);
                         break;
                     case 2:
-                        temperature.Add("Февраль", degrees);
+                        temperature_.Add("Февраль", degrees);
                         break;
                     case 3:
-                        temperature.Add("Март", degrees);
+                        temperature_.Add("Март", degrees);
                         break;
                     case 4:
-                        temperature.Add("Апрель", degrees);
+                        temperature_.Add("Апрель", degrees);
                         break;
                     case 5:
-                        temperature.Add("Май", degrees);
+                        temperature_.Add("Май", degrees);
                         break;
                     case 6:
-                        temperature.Add("Июнь", degrees);
+                        temperature_.Add("Июнь", degrees);
                         break;
                     case 7:
-                        temperature.Add("Июль", degrees);
+                        temperature_.Add("Июль", degrees);
                         break;
                     case 8:
-                        temperature.Add("Август", degrees);
+                        temperature_.Add("Август", degrees);
                         break;
                     case 9:
-                        temperature.Add("Сентябрь", degrees);
+                        temperature_.Add("Сентябрь", degrees);
                         break;
                     case 10:
-                        temperature.Add("Октябрь", degrees);
+                        temperature_.Add("Октябрь", degrees);
                         break;
                     case 11:
-                        temperature.Add("Ноябрь", degrees);
+                        temperature_.Add("Ноябрь", degrees);
                         break;
                     case 12:
-                        temperature.Add("Декабрь", degrees);
+                        temperature_.Add("Декабрь", degrees);
                         break;
                 }
             }
-            double[] means = MeansOfMounths(temperature);
+            means = MeansOfMounths(temperature_);
             Array.Sort(means);
             Console.WriteLine($"Отсортированные средние значения равны: {String.Join(" ", means)}");
 
-
+            Console.ReadLine();
         }
 
         static void CountVowCons(char[] text, out int count1, out int count2)
@@ -254,39 +256,60 @@ namespace Met_0910
         }
         static LinkedList<LinkedList<double>> MultiplyMatrix(LinkedList<LinkedList<double>> matrix1, LinkedList<LinkedList<double>> matrix2)
         {
+            // создаю матрицу, которая потом вернётся из метода
             LinkedList<LinkedList<double>> matrix = new LinkedList<LinkedList<double>>();
             for(int i = 0; i < matrix1.Count; i++)
             {
+                // добавляю туда столько строчек, сколько есть строчек в матрице_1
                 matrix.AddLast(new LinkedListNode<LinkedList<double>>(new LinkedList<double>()));
             }
+
+            // в list записываю первый узел этой матрицы, с помощью которого можно обратиться ко всем другим узлам
             LinkedListNode<LinkedList<double>> list = matrix.First;
-            //list.Value.AddLast(0);
-            LinkedListNode<double> num = list.Value.First;
 
+            // проходим по всем строчкам матрицы_1
             foreach (LinkedList<double> list1 in matrix1)
-            {
-                LinkedListNode<LinkedList<double>> list2 = matrix2.First;
-                LinkedListNode<double> num2 = list2.Value.First;
+            {              
+                // запишем в n число столбцов матрицы_2
+                int n = matrix2.First.Value.Count;
 
-                while (num2 != null)
-                {
+                // проходим по всем этим столбцам
+                for (int k = 0; k < n; k++)
+                { 
+                    // запишем первый узел для матрицы_2 и первый узел этого узла
+                    LinkedListNode<LinkedList<double>> list2 = matrix2.First;
+                    LinkedListNode<double> num2 = list2.Value.First;
+
+                    // переменная для подсчёта суммы произведения при умножении строчки на столбец
                     double sum = 0;
+
+                    // перебираем все элементы матрицы_1
                     foreach (double num1 in list1)
                     {
                         if (list2 != null)
                         {
-                            sum += num1 * num2.Value;
-                            list2 = list2.Next;
-                        }                                                
-                    }
-                    //num.Value = sum;
-                    list.Value.AddLast(sum);
-                    list = list.Next;
-                    num2 = num2.Next;
-                }
-                num = num.Next;
-            }
+                            // чтобы найти нужный столбец матрицы_2,
+                            // двигаемся от первого числа на k элементов влево с помощью for
+                            num2 = list2.Value.First;
+                            for (int i = 0; i < k; i++)
+                            {
+                                num2 = num2.Next;
+                            }
 
+                            sum += num1 * num2.Value;
+
+                            // переходим на следующую строчку матрицы_2
+                            list2 = list2.Next;                            
+                        }                                                
+                    }                 
+                    // добавляю эту сумму в возвращаемую матрицу
+                    list.Value.AddLast(sum);
+                }
+                // теперь мы заполнили всю строку возвращаемой мтарицы до конца,
+                // поэтому переходим на следующую
+                list = list.Next;
+            }
+            // конец
             return matrix;
         }
         static string PrintMatrix(double[,] matrix)
@@ -311,6 +334,20 @@ namespace Met_0910
                 print += String.Join(" ", list) + "\n";
             }
             return print;
+        }
+        static double[] MeansOfMounths(int[,] year)
+        {
+            double[] means = new double[year.GetLength(0)];
+            for (int i = 0; i < year.GetLength(0); i++)
+            {
+                double sum = 0;
+                for (int j = 0; j < year.GetLength(1); j++)
+                {
+                    sum += year[i, j];
+                }
+                means[i] = Math.Round(sum / year.GetLength(1), 1);
+            }
+            return means;
         }
         static double[] MeansOfMounths(Dictionary<string, int[]> year)
         {
